@@ -16,7 +16,7 @@
 //max speed of 35mph =~ 616inches/second
 //max rps =~7.25
 
-#define reed A0//pin connected to read switch
+#define hallSensor A0 //pin connected to hall sensor
 
 //storage variables
 int reedVal;
@@ -33,7 +33,7 @@ void setup(){
   
   reedCounter = maxReedCounter;
   circumference = 2*3.14*radius;
-  pinMode(reed, INPUT);
+  pinMode(hallSensor, INPUT);
   
   // TIMER SETUP- the timer interrupt allows precise timed measurements of the reed switch
   //for more info about configuration of arduino timers see http://arduino.cc/playground/Code/Timer1
@@ -60,8 +60,8 @@ void setup(){
 
 
 ISR(TIMER1_COMPA_vect) {//Interrupt at freq of 1kHz to measure reed switch
-  reedVal = digitalRead(reed);//get val of A0
-  if (reedVal){//if reed switch is closed
+  hallVal = analogRead(hallSensor);//get val of A0
+  if (reedVal > 520 && reedVal < 575){  // if sensor value is above 520 (510 is value when no magnetic field) and less than 575 (575 is the max value when wheel is parked)
     if (reedCounter == 0){//min time between pulses has passed
       mph = (56.8*float(circumference))/float(timer);//calculate miles per hour
       timer = 0;//reset timer
