@@ -24,6 +24,7 @@ long timer;// time between one full rotation (in ms)
 float mph;
 float radius = 2.5;// tire radius (in inches)
 float circumference;
+float best = 0;
 
 int maxReedCounter = 100;//min time (in ms) of one rotation (for debouncing)
 int reedCounter;
@@ -90,9 +91,42 @@ void displayMPH(){
   Serial.println(mph);
 }
 
+void displayBest()
+{
+  digitalWrite(13, HIGH);
+  delay(50);
+  digitalWrite(13, LOW);
+  delay(50);
+  digitalWrite(13, HIGH);
+  delay(50);
+  digitalWrite(13, LOW);
+  delay(50);
+  digitalWrite(13, HIGH);
+  delay(50);
+  digitalWrite(13, LOW);
+  delay(50);
+  digitalWrite(13, HIGH);
+  delay(50);
+  digitalWrite(13, LOW);
+  delay(50);
+  digitalWrite(13, HIGH);
+  delay(50);
+  digitalWrite(13, LOW);
+  
+  Serial.print("NEW RECORD");
+  Serial.print("\t");
+  Serial.print(best);
+  Serial.print("\n");
+}
+
 void loop(){
   //print mph once a second
   displayMPH();
+  if (mph > best)
+  {
+    best = mph;
+    displayBest();
+  }
   delay(1000);
 }
 
