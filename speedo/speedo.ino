@@ -127,6 +127,11 @@ void loop(){
     best = mph;
     displayBest();
   }
+  else if(mph > 8.80)
+  {
+    best = 0;
+    Serial.print("Best reset\n");
+  }
   delay(1000);
 }
 
