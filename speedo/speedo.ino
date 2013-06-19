@@ -22,7 +22,7 @@
 int reedVal;
 long timer;// time between one full rotation (in ms)
 float mph;
-float radius = 13.5;// tire radius (in inches)
+float radius = 2.5;// tire radius (in inches)
 float circumference;
 
 int maxReedCounter = 100;//min time (in ms) of one rotation (for debouncing)
