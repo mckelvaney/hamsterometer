@@ -10,7 +10,7 @@ EOF
 end
 
 log = Logger.new('/var/log/hamsterometer/hamsterometer.log')
-log.level = Logger::WARN
+log.level = Logger::INFO
 
 sp = SerialPort.new(ARGV[0], 9600, 8, 1, SerialPort::NONE)
 
