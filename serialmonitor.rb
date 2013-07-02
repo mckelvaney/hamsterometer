@@ -7,7 +7,7 @@ log = Logger.new('/var/log/hamsterometer/hamsterometer.log')
 log.level = Logger::INFO
 
 # set up the serial port object, with baud rate of 9600
-sp = SerialPort.new('/dev/ttyUSB0, 9600, 8, 1, SerialPort::NONE)
+sp = SerialPort.new('/dev/ttyUSB0', 9600, 8, 1, SerialPort::NONE)
 
 # recieve part
 Thread.new do
@@ -19,14 +19,4 @@ Thread.new do
       log.info(i.strip)
     end
   end 
-end
-
-# send part
-begin
-  while TRUE do
-    sp.print STDIN.gets.chomp
-  end
-rescue Interrupt
-  sp.close
-  puts      #insert a newline character after ^C
 end
