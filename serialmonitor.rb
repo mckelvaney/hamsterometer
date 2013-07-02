@@ -20,8 +20,8 @@ sp = SerialPort.new(ARGV[0], 9600, 8, 1, SerialPort::NONE)
 Thread.new do
   while TRUE do
     while (i = sp.gets) do
-      puts Time.now.to_s + ' ' + i
-      logger.info(Time.now.to_s + ' ' + i)
+      puts i
+      log.info(i)
     end
   end 
 end
