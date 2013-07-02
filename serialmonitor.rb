@@ -21,7 +21,7 @@ Thread.new do
   while TRUE do
     while (i = sp.gets) do
       puts i
-      log.info(i)
+      log.info(i.strip)
     end
   end 
 end
