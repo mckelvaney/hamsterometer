@@ -20,3 +20,13 @@ Thread.new do
     end
   end 
 end
+
+# send part
+begin
+  while TRUE do
+    sp.print STDIN.gets.chomp
+  end
+rescue Interrupt
+  sp.close
+  puts      #insert a newline character after ^C
+end
