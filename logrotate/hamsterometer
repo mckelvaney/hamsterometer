@@ -1,4 +1,5 @@
 /var/log/hamsterometer/hamsterometer.log {
+	su root adm
 	daily
 	delaycompress
 }
