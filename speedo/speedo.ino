@@ -19,7 +19,7 @@
 #define hallSensor A0 //pin connected to hall sensor
 
 //storage variables
-int reedVal;
+int hallVal;
 long timer;// time between one full rotation (in ms)
 float mph;
 float radius = 2.5;// tire radius (in inches)
@@ -61,8 +61,8 @@ void setup(){
 
 
 ISR(TIMER1_COMPA_vect) {//Interrupt at freq of 1kHz to measure reed switch
-  hallVal = analogRead(hallSensor);//get val of A0
-  if (reedVal > 520 && reedVal < 575){  // if sensor value is above 520 (510 is value when no magnetic field) and less than 575 (575 is the max value when wheel is parked)
+  int hallVal = analogRead(hallSensor);//get val of A0
+  if (hallVal > 520 && hallVal < 575){  // if sensor value is above 520 (510 is value when no magnetic field) and less than 575 (575 is the max value when wheel is parked)
     if (reedCounter == 0){//min time between pulses has passed
       mph = (56.8*float(circumference))/float(timer);//calculate miles per hour
       timer = 0;//reset timer
