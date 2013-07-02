@@ -113,10 +113,10 @@ void displayBest()
   delay(50);
   digitalWrite(13, LOW);
   
-  Serial.print("NEW RECORD");
-  Serial.print("\t");
-  Serial.print(best);
-  Serial.print("\n");
+  //Serial.print("NEW RECORD");
+  //Serial.print("\t");
+  //Serial.print(best);
+  //Serial.print("\n");
 }
 
 void loop(){
@@ -125,12 +125,12 @@ void loop(){
   if (mph > best)
   {
     best = mph;
-    displayBest();
+    //displayBest();
   }
   else if(mph > 8.80)
   {
     best = 0;
-    Serial.print("Best reset\n");
+    //Serial.print("Best reset\n");
   }
   delay(1000);
 }
