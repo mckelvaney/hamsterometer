@@ -2,19 +2,12 @@
 require 'serialport'
 require 'logger'
 
-if ARGV.size < 1
-  STDERR.print <<EOF
-  Usage: #{$0} serial_port
-EOF
-  exit(1)
-end
-
 # set up the log object - make sure the log folder is writeable
 log = Logger.new('/var/log/hamsterometer/hamsterometer.log')
 log.level = Logger::INFO
 
 # set up the serial port object, with baud rate of 9600
-sp = SerialPort.new(ARGV[0], 9600, 8, 1, SerialPort::NONE)
+sp = SerialPort.new('/dev/ttyUSB0, 9600, 8, 1, SerialPort::NONE)
 
 # recieve part
 Thread.new do
