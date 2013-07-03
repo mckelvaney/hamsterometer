@@ -38,10 +38,10 @@ end
 
 Signal.trap("TERM") do
 	sp.close
-	puts
+	puts Exiting
 end
 
 Signal.trap("KILL") do
 	sp.close
-	puts
+	puts Exiting
 end
