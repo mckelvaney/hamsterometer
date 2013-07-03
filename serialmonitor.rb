@@ -25,7 +25,7 @@ log.level = Logger::INFO
 # set up the serial port object, with baud rate of 9600
 sp = SerialPort.new(ARGV[0], 9600, 8, 1, SerialPort::NONE)
 
-puts "STARTING"
+puts Time.now.to_s + ": Starting hamsterometer"
 $stdout.flush
 
 # recieve part
@@ -41,21 +41,28 @@ end
 
 Signal.trap("SIGINT") do
 	sp.close
-	puts "Exiting"
+	puts Time.now.to_s + ": Exiting hamsterometer"
+	$stdout.flush
+	exit
+end
+
+Signal.trap("SIGTERM") do
+	sp.close
+	puts Time.now.to_s + ": Exiting hamsterometer"
 	$stdout.flush
 	exit
 end
 
 Signal.trap("TERM") do
 	sp.close
-	puts "Exiting"
+	puts Time.now.to_s + ": Exiting hamsterometer"
 	$stdout.flush
 	exit
 end
 
 Signal.trap("KILL") do
 	sp.close
-	puts "Exiting"
+	puts Time.now.to_s + ": Exiting hamsterometer"
 	$stdout.flush
 	exit
 end
