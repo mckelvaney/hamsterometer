@@ -2,8 +2,11 @@
 require 'serialport'
 require 'logger'
 
+# try to create the log directory
+Dir.mkdir('log/') unless Dir.exists?('log/')
+
 # set up the log object - make sure the log folder is writeable
-log = Logger.new('/var/log/hamsterometer/hamsterometer.log')
+log = Logger.new('log/hamsterometer.log', 'daily')
 log.level = Logger::INFO
 
 # set up the serial port object, with baud rate of 9600
