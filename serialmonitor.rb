@@ -9,6 +9,10 @@ Dir.mkdir('log/') unless Dir.exists?('log/')
 log = Logger.new('log/hamsterometer.log', 'daily')
 log.level = Logger::INFO
 
+# redirect STDOUT and STDERR so that we can make this a daemon
+$stdout.reopen("/dev/null", "w")
+$stderr.reopen("log/error.log", "w")
+
 # set up the serial port object, with baud rate of 9600
 sp = SerialPort.new('/dev/ttyUSB0', 9600, 8, 1, SerialPort::NONE)
 
