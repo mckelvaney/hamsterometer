@@ -5,7 +5,7 @@ require 'logger'
 
 if ARGV.size < 1
   STDERR.print <<EOF
-  Usage: #{$0} serial_port
+ Usage: #{$0} serial_port debug
 EOF
   exit(1)
 end
