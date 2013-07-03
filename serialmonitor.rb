@@ -2,8 +2,10 @@
 require 'serialport'
 require 'logger'
 
+debug = false
+
 # redirect STDOUT and STDERR so that we can make this a daemon
-$stdout.reopen("/dev/null", "w")
+$stdout.reopen("log/out.log", "w")
 $stderr.reopen("log/error.log", "w")
 
 # try to create the log directory
@@ -20,7 +22,7 @@ sp = SerialPort.new('/dev/tty.usbserial-A800eL7Y', 9600, 8, 1, SerialPort::NONE)
 while TRUE do
 	while (i = sp.gets) do
 		# output to STDOUT
-		puts i
+		puts i if debug
 		# output to log
 		log.info(i.strip)
 	end
