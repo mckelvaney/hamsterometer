@@ -4,12 +4,12 @@ require 'logger'
 
 debug = false
 
+# try to create the log directory
+Dir.mkdir('log/') unless Dir.exists?('log/')
+
 # redirect STDOUT and STDERR so that we can make this a daemon
 $stdout.reopen("log/out.log", "w")
 $stderr.reopen("log/error.log", "w")
-
-# try to create the log directory
-Dir.mkdir('log/') unless Dir.exists?('log/')
 
 # set up the log object - make sure the log folder is writeable
 log = Logger.new('log/hamsterometer.log', 'daily')
