@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
+
 require 'serialport'
 require 'logger'
 
+# if no input is recieved, exit and show the usage
 if ARGV.size < 1
   STDERR.print <<EOF
  Usage: #{$0} serial_port debug
@@ -9,6 +11,7 @@ EOF
   exit(1)
 end
 
+# captue the debug flag, if it if not set defaults to false
 debug = ARGV[1] || false
 
 # try to create the log directory
@@ -22,16 +25,16 @@ $stderr.reopen("log/error.log", "a")
 log = Logger.new('log/hamsterometer.log', 'daily')
 log.level = Logger::INFO
 
-# set up the serial port object, with baud rate of 9600
+# set up the serial port object, with baud rate of 9600, device is given on ARGV
 sp = SerialPort.new(ARGV[0], 9600, 8, 1, SerialPort::NONE)
 
 puts Time.now.to_s + ": Starting hamsterometer"
 $stdout.flush
 
-# recieve part
+# create an infinate loop to read the serial data
 while TRUE do
 	while (i = sp.gets) do
-		# output to STDOUT
+		# output to STDOUT if debug is set
 		puts i if debug
 		$stdout.flush
 		# output to log
@@ -39,6 +42,7 @@ while TRUE do
 	end
 end
 
+# trap signals so we can shut down
 Signal.trap("SIGINT") do
 	sp.close
 	puts Time.now.to_s + ": Exiting hamsterometer"
