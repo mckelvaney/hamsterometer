@@ -2,6 +2,10 @@
 require 'serialport'
 require 'logger'
 
+# redirect STDOUT and STDERR so that we can make this a daemon
+$stdout.reopen("/dev/null", "w")
+$stderr.reopen("log/error.log", "w")
+
 # try to create the log directory
 Dir.mkdir('log/') unless Dir.exists?('log/')
 
@@ -9,31 +13,25 @@ Dir.mkdir('log/') unless Dir.exists?('log/')
 log = Logger.new('log/hamsterometer.log', 'daily')
 log.level = Logger::INFO
 
-# redirect STDOUT and STDERR so that we can make this a daemon
-$stdout.reopen("/dev/null", "w")
-$stderr.reopen("log/error.log", "w")
-
 # set up the serial port object, with baud rate of 9600
-sp = SerialPort.new('/dev/ttyUSB0', 9600, 8, 1, SerialPort::NONE)
+sp = SerialPort.new('/dev/tty.usbserial-A800eL7Y', 9600, 8, 1, SerialPort::NONE)
 
 # recieve part
-Thread.new do
-  while TRUE do
-    while (i = sp.gets) do
-      # output to STDOUT
-      puts i
-      # output to log
-      log.info(i.strip)
-    end
-  end 
+while TRUE do
+	while (i = sp.gets) do
+		# output to STDOUT
+		puts i
+		# output to log
+		log.info(i.strip)
+	end
+end 
+
+Signal.trap("TERM") do
+	sp.close
+	puts
 end
 
-# send part
-begin
-  while TRUE do
-    sp.print STDIN.gets.chomp
-  end
-rescue Interrupt
-  sp.close
-  puts      #insert a newline character after ^C
+Signal.trap("KILL") do
+	sp.close
+	puts
 end
