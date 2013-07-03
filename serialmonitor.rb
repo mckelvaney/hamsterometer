@@ -2,7 +2,15 @@
 require 'serialport'
 require 'logger'
 
-debug = false
+
+if ARGV.size < 1
+  STDERR.print <<EOF
+  Usage: #{$0} serial_port
+EOF
+  exit(1)
+end
+
+debug = ARGV[1] || false
 
 # try to create the log directory
 Dir.mkdir('log/') unless Dir.exists?('log/')
@@ -16,7 +24,7 @@ log = Logger.new('log/hamsterometer.log', 'daily')
 log.level = Logger::INFO
 
 # set up the serial port object, with baud rate of 9600
-sp = SerialPort.new('/dev/tty.usbserial-A800eL7Y', 9600, 8, 1, SerialPort::NONE)
+sp = SerialPort.new(ARGV[0], 9600, 8, 1, SerialPort::NONE)
 
 # recieve part
 while TRUE do
